@@ -26,7 +26,7 @@ const Footer = () => {
                     <FontAwesomeIcon icon={faArrowUp} width={16} height={16} />
                 </Button>
             </ScrollLink>
-            <label className='hidden md:flex'>© Arnold Nillas 2024.</label>
+            <label className='hidden md:flex'>© Arnold Nillas {new Date().getFullYear()}.</label>
         </div>
     )
 }

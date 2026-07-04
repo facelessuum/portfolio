@@ -40,7 +40,7 @@ const introductionText = {
     text: {
         h1: "Arnold Nillas",
         paragraphs: {
-            p1: "I'm a 21 year old developer who loves to solve problems.",
+            p1: "I'm a 23 year old developer who loves to solve problems.",
             p2: "I've been diving deep into web development, learning how to create awesome user interfaces and build strong server-side applications through self-teaching. It's been quite a journey, but I'm getting the hang of it!",
             p3: "Over the past year, I've really enjoyed solving coding puzzles and making ideas into real websites. I've been all in, from thinking up ideas to actually making them work online.",
             p4: "Click this button below :D"
@@ -180,6 +180,16 @@ const contactTexts = {
 const projectTexts = {
     h1: "Featured Projects",
     projects: [
+        {
+            name: "Image Edits",
+            description: "Professional real estate photo editing, virtual staging, day-to-dusk, and floorplan services for photographers, agents, and property marketers who need fast, consistent delivery.",
+            image: '/projects/imageedits.png',
+            used: ["/icons/nextjs.svg", "/icons/tailwind.svg", '/icons/postgresql.svg', "/icons/typescript.svg",],
+            links: {
+                web: 'https://imageedits.com',
+                github: 'https://imageedits.com'
+            }
+        },
         {
             name: "SonicNode",
             description: "A reliable Minecraft server hosting in Philippines. (built by me)",
