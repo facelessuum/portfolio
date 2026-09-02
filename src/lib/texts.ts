@@ -27,7 +27,7 @@ const socialLinks = [
     },
     {
         icon: faGithub,
-        link: 'https://github.com/arnoldzkie2'
+        link: 'https://github.com/facelessuum'
     },
     {
         icon: faLinkedin,
@@ -197,7 +197,7 @@ const projectTexts = {
             used: ["/icons/nextjs.svg", "/icons/tailwind.svg", '/icons/mysql.svg', "/icons/typescript.svg",],
             links: {
                 web: 'https://sonicnode.xyz/',
-                github: 'https://github.com/arnoldzkie2/sonicnode'
+                github: 'https://github.com/facelessuum/sonicnode'
             }
         },
         {
@@ -207,7 +207,7 @@ const projectTexts = {
             used: ["/icons/nextjs.svg", "/icons/typescript.svg", "/icons/tailwind.svg", '/icons/mysql.svg'],
             links: {
                 web: 'https://www.verbalace.com/',
-                github: 'https://github.com/arnoldzkie2/verbalace'
+                github: 'https://github.com/facelessuum/verbalace'
             }
         },
     ]

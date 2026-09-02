@@ -3,7 +3,7 @@ import { Button } from './ui/button'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import { hiddenText, mainText } from '@/lib/texts'
+import { hiddenText, mainText, socialLinks } from '@/lib/texts'
 import { Carousel, CarouselContent, CarouselItem } from './ui/carousel'
 import { toast } from 'sonner'
 import { Link as ScrollLink } from 'react-scroll'
@@ -34,7 +34,7 @@ const Main = ({ MainRef }: Props) => {
                                         {mainText.button}
                                     </ScrollLink>
                                 </Button>
-                                <Link href={'https://github.com/arnoldzkie2'} target='_blank'>
+                                <Link href={socialLinks[1].link} target='_blank'>
                                     <Button variant={'outline'} className='flex items-center gap-3'>
                                         <FontAwesomeIcon icon={faGithub} width={16} height={16} />
                                         Github

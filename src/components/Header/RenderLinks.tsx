@@ -3,7 +3,7 @@ import { Button } from "../ui/button"
 import Link from "next/link"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faGithub } from "@fortawesome/free-brands-svg-icons"
-import { headerLinks, logoText } from "@/lib/texts"
+import { headerLinks, logoText, socialLinks } from "@/lib/texts"
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 import { faBarsStaggered } from "@fortawesome/free-solid-svg-icons"
 import { ToogleTheme } from "../ToggleTheme"
@@ -31,7 +31,7 @@ const RenderLinks = (props: Props) => {
                 <ScrollLink href={`#contact`} to='Contact' smooth={true} className='hover:text-foreground' duration={1500}>
                     <Button className='h-8'>{"Let's Work!"}</Button>
                 </ScrollLink>
-                <Link href={'https://github.com/arnoldzkie2'} target='_blank'>
+                <Link href={socialLinks[1].link} target='_blank'>
                     <Button className='px-3 text-foreground' variant={'ghost'}>
                         <FontAwesomeIcon
                             icon={faGithub}
@@ -92,7 +92,7 @@ const RenderLinks = (props: Props) => {
                 <ScrollLink href={`#contact`} to='Contact' smooth={true} className='hover:text-foreground' duration={1500}>
                     <Button className='h-8'>{"Let's Work!"}</Button>
                 </ScrollLink>
-                <Link href={'https://github.com/arnoldzkie2'} target='_blank' className='text-base'>
+                <Link href={socialLinks[1].link} target='_blank' className='text-base'>
                     <Button className="px-3 text-foreground" variant="ghost">
                         <FontAwesomeIcon
                             icon={faGithub}
