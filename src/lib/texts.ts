@@ -81,6 +81,11 @@ const expertiseTexts = {
                     description: "Expertise in building fast, modern, scalable, and responsive web applications efficiently and elegantly leveraging Next.js capabilities."
                 },
                 {
+                    title: "Python",
+                    icon: "/icons/python.svg",
+                    description: "Proficient in Python for backend development, automation, data processing, and building reliable conversion tools."
+                },
+                {
                     title: "React",
                     icon: "/icons/react.svg",
                     description: "Proficiency in developing dynamic, interactive user interfaces, and robust, efficient single-page applications effortlessly using React."
@@ -94,6 +99,11 @@ const expertiseTexts = {
                     title: "Tailwind CSS",
                     icon: "/icons/tailwind.svg",
                     description: "Proficient in Tailwind CSS, a utility-first framework for creating highly customized, responsive designs effortlessly and efficiently."
+                },
+                {
+                    title: "Turborepo",
+                    icon: "/icons/turborepo.svg",
+                    description: "Experience using Turborepo to organize and optimize monorepo development with shared packages, efficient task pipelines, and caching."
                 },
                 {
                     title: "MySQL",
