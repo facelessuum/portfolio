@@ -1,70 +1,76 @@
+'use client'
+
 import { expertiseTexts } from '@/lib/texts';
-import React from 'react'
+import React, { useState } from 'react'
 import { Card, CardContent } from './ui/card';
 import { Label } from './ui/label';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel';
 import Image from 'next/image';
 import { Separator } from './ui/separator';
+import { Button } from './ui/button';
 
 interface Props {
   ExpertiseRef: React.MutableRefObject<null>;
 }
 
 const Expertise = ({ ExpertiseRef }: Props) => {
-  return (
-    <div className='padding bg-secondary pt-20 lg:py-32 flex items-center flex-col gap-12 md:gap-16 lg:gap-24 xl:gap-28 lg:justify-center' >
-      <div className='space-y-2'>
-        <h1 className='text-3xl lg:text-4xl font-[1000] text-center'>{expertiseTexts.h1}</h1>
-        <Separator className='w-2/3 h-[3px] bg-primary rounded-full ml-auto' />
-      </div>
-      <div className='flex flex-col w-full gap-5 pt-10'>
-        <div className='text-xl md:text-2xl flex items-center gap-2 font-black'>
-          <div className='h-5 w-[3px] bg-primary'></div>
-          {expertiseTexts.skills.tech.h1}
-        </div>
-        <div className='w-full' ref={ExpertiseRef} id='Expertise'>
-          <Carousel
-            className="w-full"
-          >
-            <CarouselContent>
-              {expertiseTexts.skills.tech.skills.map((skill, index) => (
-                <CarouselItem key={index} className="md:pl-4 sm:basis-1/2 lg:basis-1/3 w-full">
-                  <Card>
-                    <CardContent className='flex flex-col gap-2 pt-5'>
-                      <Image width={45} height={45} src={skill.icon} alt={skill.title} className={`${index === 0 || index === 1 || index > 8 ? 'bg-white rounded-full' : ''}`} />
-                      <Label className='text-lg md:text-xl pt-2'>{skill.title}</Label>
-                      <p className='text-muted-foreground text-sm'>{skill.description}</p>
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselNext className='md:flex hidden' />
-            <CarouselPrevious className='hidden md:flex' />
-            <div className='flex items-center relative mt-5 md:hidden'>
-              <CarouselPrevious className='absolute left-5' />
-              <CarouselNext className='absolute right-5' />
-            </div>
-          </Carousel>
-        </div>
-      </div>
+  const [activeTab, setActiveTab] = useState<'tech' | 'programming'>('tech')
+  const technicalSkills = expertiseTexts.skills.tech.skills
+  const programmingSkills = expertiseTexts.skills.programming.skills
 
-      <div className='flex flex-col w-full gap-12'>
-        <div className='text-xl md:text-2xl flex items-center gap-2 font-black'>
-          <div className='h-5 w-[3px] bg-primary'></div>
-          {expertiseTexts.skills.programming.h1}
+  return (
+    <div className='padding relative overflow-hidden bg-secondary py-24 lg:py-36'>
+      <div className='pointer-events-none absolute right-[-10rem] top-20 h-80 w-80 rounded-full bg-accent/10 blur-3xl' />
+      <div className='mx-auto flex w-full max-w-7xl flex-col gap-10'>
+        <div className='space-y-3'>
+          <span className='section-kicker'>Tools I use</span>
+          <h1 className='section-title'>{expertiseTexts.h1}</h1>
+          <Separator className='h-[3px] w-20 rounded-full bg-accent' />
         </div>
-        <div className='flex w-full items-center flex-col gap-5 lg:gap-x-20 md:flex-row md:flex-wrap justify-center'>
-          {expertiseTexts.skills.programming.skills.map(skill => (
-            <div key={skill.title} className='w-full md:w-[40%] xl:w-[45%] flex items-center gap-10'>
-              <div className='flex flex-col gap-1.5'>
-                <Label className='text-xl'>{skill.title}</Label>
-                <p className='text-sm text-muted-foreground'>{skill.description}</p>
-              </div>
-              <FontAwesomeIcon icon={skill.icon} width={30} height={30} className='text-4xl' />
+
+        <div className='flex flex-col gap-6' ref={ExpertiseRef} id='Expertise'>
+          <div className='flex w-fit rounded-md border border-border/70 bg-card/60 p-1'>
+            <Button type='button' variant={activeTab === 'tech' ? 'default' : 'ghost'} className='rounded-md' onClick={() => setActiveTab('tech')}>
+              Technical stack
+            </Button>
+            <Button type='button' variant={activeTab === 'programming' ? 'default' : 'ghost'} className='rounded-md' onClick={() => setActiveTab('programming')}>
+              Problem-solving
+            </Button>
+          </div>
+
+          {activeTab === 'tech' ? (
+            <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
+              {technicalSkills.map((skill, index) => (
+                <Card key={skill.title} className='group border-border/70 bg-card/70 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-xl'>
+                  <CardContent className='flex min-h-52 flex-col gap-4 p-6'>
+                    <div className='flex items-center justify-between'>
+                      <div className='flex h-12 w-12 items-center justify-center rounded-xl border border-border/70 bg-secondary p-2 transition group-hover:border-accent/50'>
+                        <Image width={45} height={45} src={skill.icon} alt={skill.title} className={index === 0 || index === 1 || index > 8 ? 'rounded-full' : ''} />
+                      </div>
+                      <span className='text-xs font-mono text-muted-foreground/60'>0{index + 1}</span>
+                    </div>
+                    <Label className='text-lg md:text-xl'>{skill.title}</Label>
+                    <p className='text-sm leading-6 text-muted-foreground'>{skill.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
-          ))}
+          ) : (
+            <div className='grid gap-4 md:grid-cols-2'>
+              {programmingSkills.map((skill, index) => (
+                <Card key={skill.title} className='group border-border/70 bg-card/70 transition duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-xl'>
+                  <CardContent className='flex min-h-40 items-start justify-between gap-6 p-6'>
+                    <div className='flex flex-col gap-2'>
+                      <span className='text-xs font-mono text-accent'>0{index + 1}</span>
+                      <Label className='text-xl'>{skill.title}</Label>
+                      <p className='text-sm leading-6 text-muted-foreground'>{skill.description}</p>
+                    </div>
+                    <FontAwesomeIcon icon={skill.icon} width={30} height={30} className='mt-1 text-3xl text-accent transition group-hover:scale-110' />
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

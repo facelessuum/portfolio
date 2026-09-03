@@ -196,10 +196,21 @@ const projectTexts = {
             image: '/projects/oraxen2bedrock.png',
             used: ["/icons/turborepo.svg", "/icons/nextjs.svg", "/icons/python.svg", "/icons/postgresql.svg"],
             links: {
-                web: 'https://github.com/facelessuum/oraxen2bedrock',
+                web: 'https://oraxen2bedrock-zeta.vercel.app/',
                 github: 'https://github.com/facelessuum/oraxen2bedrock'
             }
         },
+        {
+            name: "Tych",
+            description: "A modern DeFi platform focused on making growth predictable through simple, accessible, and transparent financial products.",
+            image: '/projects/tych.png',
+            used: ["/icons/nextjs.svg", "/icons/typescript.svg", "/icons/tailwind.svg", '/icons/mysql.svg'],
+            links: {
+                web: 'https://tych.io/',
+                github: 'https://tych.io/'
+            }
+        },
+
         {
             name: "Image Edits",
             description: "Professional real estate photo editing, virtual staging, day-to-dusk, and floorplan services for photographers, agents, and property marketers who need fast, consistent delivery.",

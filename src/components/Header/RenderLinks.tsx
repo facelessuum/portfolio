@@ -6,7 +6,6 @@ import { faGithub } from "@fortawesome/free-brands-svg-icons"
 import { headerLinks, logoText, socialLinks } from "@/lib/texts"
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 import { faBarsStaggered } from "@fortawesome/free-solid-svg-icons"
-import { ToogleTheme } from "../ToggleTheme"
 
 interface Props {
     activeLink: string
@@ -29,20 +28,20 @@ const RenderLinks = (props: Props) => {
             >{logoText}</ScrollLink>
             <div className='flex items-center gap-1 sm:gap-2'>
                 <ScrollLink href={`#contact`} to='Contact' smooth={true} className='hover:text-foreground' duration={1500}>
-                    <Button className='h-8'>{"Let's Work!"}</Button>
+                    <Button className='h-9 rounded-md px-4 shadow-md shadow-accent/15'>{"Let's Work!"}</Button>
                 </ScrollLink>
                 <Link href={socialLinks[1].link} target='_blank'>
-                    <Button className='px-3 text-foreground' variant={'ghost'}>
+                    <Button aria-label='Open GitHub' className='px-3 text-foreground' variant={'ghost'}>
                         <FontAwesomeIcon
                             icon={faGithub}
                             width={16} height={16}
+                            className=''
                         />
                     </Button>
                 </Link>
-                <ToogleTheme />
                 <Sheet open={open} onOpenChange={setOpen}>
                     <SheetTrigger asChild>
-                        <Button className='px-3 text-foreground' variant={'ghost'}>
+                        <Button aria-label='Open menu' className='px-3 text-foreground' variant={'ghost'}>
                             <FontAwesomeIcon icon={faBarsStaggered} width={16} height={16} className='cursor-pointer' />
                         </Button>
                     </SheetTrigger>
@@ -90,10 +89,10 @@ const RenderLinks = (props: Props) => {
             ))}
             <div className='flex items-center gap-3'>
                 <ScrollLink href={`#contact`} to='Contact' smooth={true} className='hover:text-foreground' duration={1500}>
-                    <Button className='h-8'>{"Let's Work!"}</Button>
+                    <Button className='h-9 rounded-md px-5 shadow-md shadow-accent/15'>{"Let's Work!"}</Button>
                 </ScrollLink>
                 <Link href={socialLinks[1].link} target='_blank' className='text-base'>
-                    <Button className="px-3 text-foreground" variant="ghost">
+                    <Button aria-label='Open GitHub' className="px-3 text-foreground" variant="ghost">
                         <FontAwesomeIcon
                             icon={faGithub}
                             width={20} height={20}
@@ -101,7 +100,6 @@ const RenderLinks = (props: Props) => {
                         />
                     </Button>
                 </Link>
-                <ToogleTheme />
             </div>
         </ul>
     )
