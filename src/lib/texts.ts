@@ -181,6 +181,16 @@ const projectTexts = {
     h1: "Featured Projects",
     projects: [
         {
+            name: "Oraxen2Bedrock",
+            description: "A Turborepo monorepo for converting Oraxen resource packs to Bedrock for Geyser support, with a Next.js frontend, FastAPI backend, Python conversion engine, and PostgreSQL database.",
+            image: '/projects/oraxen2bedrock.png',
+            used: ["/icons/turborepo.svg", "/icons/nextjs.svg", "/icons/python.svg", "/icons/postgresql.svg"],
+            links: {
+                web: 'https://github.com/facelessuum/oraxen2bedrock',
+                github: 'https://github.com/facelessuum/oraxen2bedrock'
+            }
+        },
+        {
             name: "Image Edits",
             description: "Professional real estate photo editing, virtual staging, day-to-dusk, and floorplan services for photographers, agents, and property marketers who need fast, consistent delivery.",
             image: '/projects/imageedits.png',

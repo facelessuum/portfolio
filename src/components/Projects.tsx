@@ -38,7 +38,7 @@ const Projects = ({ ProjectsRef }: Props) => {
                 <h1 className='text-xl text-primary font-[1000] px-8 py-1 rounded-tl-full rounded-b-full bg-muted uppercase hidden lg:flex xl:text-2xl'>{project.name}</h1>
                 <div className='items-center gap-4 hidden lg:flex'>
                   {project.used.map((obj, i) => (
-                    <Image width={30} height={30} src={obj} alt={obj} key={obj} className={`${i === 0 && 'bg-white rounded-full'}`} data-aos="fade-up" data-aos-duration={(i + 1) * 500} />
+                    <Image width={30} height={30} src={obj} alt={obj} key={obj} className={`${i === 0 && 'rounded-full'}`} data-aos="fade-up" data-aos-duration={(i + 1) * 500} />
                   ))
                   }
                 </div>

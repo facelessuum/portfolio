@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="63" height="63" fill="none" viewBox="0 0 63 63" role="img" aria-label="Turborepo">
+  <path fill="url(#turborepo-gradient)" d="M15.82 49.47c3.79 3.28 8.6 5.39 13.9 5.76v7.64a31.3 31.3 0 0 1-19.3-8zM33.15 0a31.48 31.48 0 0 1 0 62.87v-7.64a23.9 23.9 0 0 0 22.15-23.8 23.9 23.9 0 0 0-22.15-23.8zM7.64 33.15a23.8 23.8 0 0 0 5.76 13.9L8 52.44a31.4 31.4 0 0 1-8-19.3z"/>
+  <path fill="#fff" d="M30.95 11c-11.1 0-20.13 9.16-20.13 20.44 0 11.27 9.03 20.44 20.13 20.44s20.13-9.17 20.13-20.44S42.05 11 30.95 11m0 31.02a10.5 10.5 0 0 1-10.42-10.58 10.5 10.5 0 0 1 10.42-10.58 10.5 10.5 0 0 1 10.41 10.58 10.5 10.5 0 0 1-10.41 10.58"/>
+  <circle cx="30.95" cy="31.44" r="10.5" fill="#000"/>
+  <defs>
+    <linearGradient id="turborepo-gradient" x1="34.381" x2="3.438" y1="4.42" y2="35.363" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0096FF"/>
+      <stop offset="1" stop-color="#FF1E56"/>
+    </linearGradient>
+  </defs>
+</svg>
