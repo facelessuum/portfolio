@@ -197,7 +197,7 @@ const projectTexts = {
             used: ["/icons/turborepo.svg", "/icons/nextjs.svg", "/icons/python.svg", "/icons/postgresql.svg"],
             links: {
                 web: 'https://oraxen2bedrock-zeta.vercel.app/',
-                github: 'https://github.com/facelessuum/oraxen2bedrock'
+                github: 'https://github.com/facelessuum/oraxen2bedrockScript'
             }
         },
         {
