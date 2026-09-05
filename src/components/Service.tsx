@@ -1,48 +1,37 @@
-import { serviceTexts } from '@/lib/texts';
-import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-interface Props {
-  ServiceRef: React.MutableRefObject<null>;
-}
+import Image from 'next/image'
+import { serviceTexts, projectTexts } from '@/lib/texts'
+import { Icon } from '@/components/ui/icon'
+import { faArrowRight, faArrowUpRightFromSquare, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { Button } from './ui/button'
+import SectionHeading from './SectionHeading'
 
-const Service = ({ ServiceRef }: Props) => {
-
-  const returnFade = (index: number) => {
-
-    let fade: string
-
-    if (index === 0) {
-      fade = "fade-up-right"
-    } else if (index === 1) {
-      fade = "fade-up"
-    } else {
-      fade = "fade-up-left"
-    }
-    return fade
-  }
-
+export default function Service() {
   return (
-    <div className='padding relative overflow-hidden bg-[#070d19] text-white flex items-center flex-col gap-12 py-24 lg:py-36' id='Service' ref={ServiceRef}>
-      <div className='pointer-events-none absolute -left-32 top-24 h-80 w-80 rounded-full bg-cyan-400/10 blur-3xl' />
-      <div className='w-full max-w-7xl space-y-2'>
-        <span className='section-kicker'>How I can help</span>
-        <h1 className='section-title'>{serviceTexts.h1}</h1>
-        <p className='max-w-xl pt-3 text-white/55'>Thoughtful engineering, clear communication, and digital products that are built to last.</p>
+    <section id="Service" className="py-[104px] max-md:py-16 border-y bg-card">
+      <div className="w-[min(1184px,calc(100%-96px))] mx-auto max-md:w-[calc(100%-40px)]">
+        <SectionHeading number="04" label="How I can help" title="Your next idea, made real." description="A home for your business. A tool for your team. Let’s build something that earns its place." />
+        <div className="border-t">
+          {serviceTexts.services.map((service, index) => {
+            const project = projectTexts.projects.find(project => project.name === service.projectName)
+            return (
+              <article key={service.category} className="grid gap-6 border-b py-9 sm:grid-cols-[48px_minmax(0,1fr)] lg:grid-cols-[64px_minmax(0,1fr)_240px] lg:gap-10 lg:py-10">
+                <div className="flex items-center gap-4 font-mono text-sm text-muted-foreground sm:flex-col sm:items-start sm:gap-6 [&_svg]:text-accent" aria-hidden="true">{String(index + 1).padStart(2, '0')}<Icon icon={service.icon} width={22} height={22} /></div>
+                <div className="[&_h3]:mb-4 [&_h3]:mt-4 [&_h3]:max-w-lg [&_h3]:text-3xl [&_h3]:font-medium [&_h3]:leading-tight [&_h3]:tracking-[-0.045em]">
+                  <p className="flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-accent [&_>_span]:text-muted-foreground">{service.category}</p>
+                  <h3>{service.title}</h3>
+                  <p className="max-w-lg text-sm leading-7 text-muted-foreground">{service.description}</p>
+                  <ul aria-label={`${service.category} deliverables`} className="mt-6 flex flex-wrap gap-x-5 gap-y-3 text-xs [&_li]:flex [&_li]:items-center [&_li]:gap-2 [&_svg]:shrink-0 [&_svg]:text-accent">{service.deliverables.map(item => <li key={item}><Icon icon={faCheck} width={11} height={11} aria-hidden="true" />{item}</li>)}</ul>
+                </div>
+                {project && <a href={project.links.web} target="_blank" rel="noopener noreferrer" className="block self-center overflow-hidden rounded-lg border border-border bg-background transition-colors hover:border-accent/50 sm:col-start-2 sm:max-w-[260px] lg:col-start-auto [&:hover_img]:scale-[1.03]" aria-label={`Explore ${project.name}, an example of ${service.category.toLowerCase()} (opens in a new tab)`}>
+                  <div className="relative aspect-[16/9] overflow-hidden [&_img]:transition-transform [&_img]:duration-300"><Image src={project.image} alt={`${project.name} website preview`} fill sizes="(max-width: 639px) 85vw, 260px" className="object-cover object-top" /></div>
+                  <div className="flex items-center justify-between gap-4 p-4 [&_span]:text-[9px] [&_span]:uppercase [&_span]:tracking-widest [&_span]:text-muted-foreground [&_p]:mt-1 [&_p]:text-sm [&_>_svg]:text-accent"><div><span>See it in practice</span><p>{project.name}</p></div><Icon icon={faArrowUpRightFromSquare} width={13} height={13} aria-hidden="true" /></div>
+                </a>}
+              </article>
+            )
+          })}
+        </div>
+        <div className="mt-9 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center [&_p]:text-sm [&_p]:leading-6 [&_p_span]:mt-1 [&_p_span]:block [&_p_span]:text-xs [&_p_span]:text-muted-foreground"><p>Have the idea, but not the full brief?<span>That’s a good place to start.</span></p><Button asChild variant="outline" className="h-11 gap-5"><a href="#Contact">Let’s figure it out <Icon icon={faArrowRight} width={14} height={14} aria-hidden="true" /></a></Button></div>
       </div>
-      <div className='flex w-full max-w-7xl items-stretch flex-col gap-5 justify-evenly md:flex-wrap xl:flex-nowrap md:flex-row'>
-        {serviceTexts.services.map((service, index) => (
-          <div className='group w-full sm:w-96 xl:w-full flex flex-col gap-5 rounded-xl border border-white/10 bg-white/[0.045] p-7 text-left shadow-2xl shadow-black/10 transition duration-300 hover:-translate-y-1 hover:border-cyan-300/50 hover:bg-white/[0.08]' key={index} data-aos={returnFade(index)}>
-            <div className='flex items-center justify-between'>
-              <span className='text-xs font-bold tracking-widest text-cyan-300'>0{index + 1}</span>
-              <FontAwesomeIcon icon={service.icon} width={24} height={24} className='text-2xl text-cyan-300 transition group-hover:scale-110' />
-            </div>
-            <h1 className='text-xl font-bold'>{service.title}</h1>
-            <p className='text-sm leading-6 text-white/55'>{service.description}</p>
-          </div>
-        ))}
-      </div>
-    </div>
+    </section>
   )
 }
-
-export default Service

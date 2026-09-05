@@ -1,4 +1,3 @@
-'use client'
 import Contact from '@/components/Contact'
 import Expertise from '@/components/Expertise'
 import Footer from '@/components/Footer'
@@ -7,37 +6,21 @@ import Introduction from '@/components/Introduction'
 import Main from '@/components/Main'
 import Projects from '@/components/Projects'
 import Service from '@/components/Service'
-import React, { useEffect, useRef } from 'react'
-import AOS from 'aos'
 
-const HomePage = () => {
-
-  const sectionRefs = {
-    Home: useRef(null),
-    Introduction: useRef(null),
-    Service: useRef(null),
-    Expertise: useRef(null),
-    Projects: useRef(null),
-  };
-
-  useEffect(() => {
-    AOS.init({
-      duration: 1000
-    })
-  }, [])
-
+export default function HomePage() {
   return (
-    <div className='overflow-x-hidden'>
-      <Header sectionRefs={sectionRefs} />
-      <Main MainRef={sectionRefs.Home} />
-      <Projects ProjectsRef={sectionRefs.Projects} />
-      <Introduction IntroductionRef={sectionRefs.Introduction} />
-      <Expertise ExpertiseRef={sectionRefs.Expertise} />
-      <Service ServiceRef={sectionRefs.Service} />
-      <Contact />
+    <>
+      <a href="#main-content" className="fixed left-4 top-4 z-50 -translate-y-24 rounded bg-accent px-5 py-3 text-accent-foreground focus:translate-y-0">Skip to content</a>
+      <Header />
+      <main id="main-content">
+        <Main />
+        <Projects />
+        <Introduction />
+        <Expertise />
+        <Service />
+        <Contact />
+      </main>
       <Footer />
-    </div>
+    </>
   )
 }
-
-export default HomePage

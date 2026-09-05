@@ -1,72 +1,61 @@
 import { faFacebook, faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons"
-import { faBrain, faChartLine, faCode, faGlobe, faLightbulb } from "@fortawesome/free-solid-svg-icons"
+import { faBrain, faPuzzlePiece, faCode, faGlobe, faLightbulb } from "@fortawesome/free-solid-svg-icons"
 import { faDatabase, faTachometerAlt, faGraduationCap, faBug } from '@fortawesome/free-solid-svg-icons';
 
-const logoText = 'A/N'
 const email = 'arnoldzkie22@gmail.com'
 
-const headerLinks = ['Projects', 'Introduction', 'Expertise', 'Service']
-
-const mainText = {
-    h1: 'Transforming Ideas into Functional Web Applications',
-    h2: 'I develop user-friendly solutions that are easy to understand and implement. Experience the simplicity and reliability of straightforward software.',
-    button: "Let's Work!"
-}
-
-const hiddenText = {
-    h1: "You've Uncovered a Hidden Gem!",
-    h2: 'This is where things get interesting. Take a look around and see what you find.',
-    button: "Don't Click... Unless You Dare!",
-    message: "Well spotted! Let's team up. Hire me!"
-}
+const navigation = [
+    { id: 'Projects', label: 'Work' },
+    { id: 'Introduction', label: 'About' },
+    { id: 'Expertise', label: 'Toolkit' },
+    { id: 'Service', label: 'Services' },
+]
 
 const socialLinks = [
     {
+        label: 'Facebook',
         icon: faFacebook,
         link: 'https://web.facebook.com/arnoldzkie2'
     },
     {
+        label: 'GitHub',
         icon: faGithub,
         link: 'https://github.com/facelessuum'
     },
     {
+        label: 'LinkedIn',
         icon: faLinkedin,
         link: 'https://www.linkedin.com/in/arnold-nillas-924132268/'
     }
 ]
 
-const introductionText = {
-    h1: "Who Am I",
-    text: {
-        h1: "Arnold Nillas",
-        paragraphs: {
-            p1: "I'm a 23 year old developer who loves to solve problems.",
-            p2: "I've been diving deep into web development, learning how to create awesome user interfaces and build strong server-side applications through self-teaching. It's been quite a journey, but I'm getting the hang of it!",
-            p3: "Over the past year, I've really enjoyed solving coding puzzles and making ideas into real websites. I've been all in, from thinking up ideas to actually making them work online.",
-            p4: "Click this button below :D"
-        }
-    }
-}
-
 const serviceTexts = {
-    h1: 'What I Offer',
     services: [
         {
-            icon: faCode,
-            title: "Full Stack Development",
-            description: "Crafting comprehensive solutions that cover both frontend and backend development, ensuring your project is built with versatility and expertise."
-        },
-        {
             icon: faGlobe,
-            title: "Modern Web Application",
-            description: "Building cutting-edge web applications using the latest technologies and best practices, guaranteeing a user-friendly and responsive experience for your users."
+            title: 'A website that feels like your business.',
+            category: 'Websites & landing pages',
+            description: 'Give people a clear picture of what you do and an easy way to take the next step.',
+            deliverables: ['Responsive layouts', 'Clear content & navigation', 'Contact & enquiry flows'],
+            projectName: 'Image Edits',
         },
         {
-            icon: faChartLine,
-            title: "Maintainable and Scalable",
-            description: "Creating solutions that are easily maintainable and scalable, allowing your project to grow alongside your business needs without compromising performance or stability."
-        }
-    ]
+            icon: faCode,
+            title: 'Your workflow. Your web app.',
+            category: 'Full stack applications',
+            description: 'Turn your idea into an application with thoughtful interfaces and the systems to support them.',
+            deliverables: ['Interactive interfaces', 'API & database integration', 'Maintainable application code'],
+            projectName: 'Tych',
+        },
+        {
+            icon: faPuzzlePiece,
+            title: 'Less repetitive work. More possibility.',
+            category: 'Custom tools & integrations',
+            description: 'Connect systems, convert files, and build a simpler way to get the difficult things done.',
+            deliverables: ['File conversion tools', 'Custom APIs', 'Workflow automation'],
+            projectName: 'Oraxen2Bedrock',
+        },
+    ],
 }
 
 const expertiseTexts = {
@@ -176,17 +165,6 @@ const expertiseTexts = {
 
 }
 
-const contactTexts = {
-    form: {
-        h1: "Contact Me",
-        p: "I just need a few quick details"
-    },
-    div: {
-        h1: "Leave a message.",
-        p: "Hey there! Whether you have a project idea, want to discuss collaboration opportunities, or simply want to say hello, I'm all ears! Feel free to drop me a message using the form below. I'm excited to hear from you and can't wait to chat!"
-    }
-}
-
 const projectTexts = {
     h1: "Featured Projects",
     projects: [
@@ -245,15 +223,10 @@ const projectTexts = {
 }
 
 export {
-    logoText,
-    headerLinks,
-    introductionText,
-    contactTexts,
-    mainText,
+    navigation,
     email,
-    hiddenText,
     serviceTexts,
     socialLinks,
     expertiseTexts,
-    projectTexts
+    projectTexts,
 }

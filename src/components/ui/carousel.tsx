@@ -99,7 +99,6 @@ const Carousel = React.forwardRef<
           scrollNext()
         }
       },
-      // eslint-disable-next-line react-hooks/exhaustive-deps
       [scrollPrev, scrollNext]
     )
 

@@ -1,69 +1,116 @@
-import React from 'react'
-import { Button } from './ui/button'
-import Link from 'next/link'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowDown, faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import { mainText, socialLinks } from '@/lib/texts'
+import { Icon } from "@/components/ui/icon";
+import {
+  faArrowUpRightFromSquare,
+  faArrowDown,
+  faTurnUp,
+  faAsterisk,
+} from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
+import AmbientBackground from "./AmbientBackground";
+import { Button } from "./ui/button";
+import { projectTexts } from "@/lib/texts";
 
-interface Props {
-    MainRef: React.MutableRefObject<null>
-}
-
-const Main = ({ MainRef }: Props) => {
-    return (
-        <section className='padding relative isolate flex min-h-[calc(100vh-1rem)] w-full items-center overflow-hidden pb-20 pt-32 lg:pb-24 lg:pt-24' id='Home' ref={MainRef}>
-            <div className='grid-surface pointer-events-none absolute inset-0 -z-10 opacity-70' />
-            <div className='hero-orb -left-32 top-32 -z-10 h-72 w-72 bg-accent/15' />
-            <div className='hero-orb right-0 top-1/3 -z-10 h-96 w-96 bg-indigo-500/10 [animation-delay:-4s]' />
-            <div className='mx-auto grid w-full max-w-7xl items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20'>
-                <div className='flex flex-col items-center gap-7 text-center lg:items-start lg:text-left'>
-                    <div className='flex items-center gap-3 rounded-md border border-border/70 bg-card/60 px-4 py-2 text-xs text-muted-foreground backdrop-blur'>
-                        <span className='h-2 w-2 animate-pulse rounded-full bg-emerald-400' />
-                        Available for select projects
-                    </div>
-                    <h1 className='max-w-4xl text-5xl font-black leading-[0.92] tracking-[-0.08em] md:text-7xl lg:text-8xl'>{mainText.h1}</h1>
-                    <p className='max-w-xl text-base leading-7 text-muted-foreground lg:text-lg'>{mainText.h2}</p>
-                </div>
-                <div className='relative mx-auto flex w-full max-w-md flex-col gap-4 lg:mx-0'>
-                    <div className='pointer-events-none absolute -inset-5 rounded-2xl border border-accent/10' />
-                    <div className='relative z-10 rounded-xl border border-border/70 bg-card/80 p-3 shadow-2xl shadow-black/20 backdrop-blur-xl'>
-                        <div className='rounded-lg border border-border/60 bg-secondary/70 p-5 font-mono text-sm shadow-inner'>
-                            <div className='mb-8 flex items-center gap-2 border-b border-border/60 pb-4'>
-                                <span className='h-2.5 w-2.5 rounded-full bg-red-400' /><span className='h-2.5 w-2.5 rounded-full bg-yellow-400' /><span className='h-2.5 w-2.5 rounded-full bg-green-400' />
-                                <span className='ml-auto text-[10px] text-muted-foreground'>arnold.dev / home</span>
-                            </div>
-                            <p className='text-muted-foreground'><span className='text-accent'>const</span> developer = {'{'}</p>
-                            <p className='pl-5 text-foreground'>Name: <span className='text-accent'>&quot;Arnold Nillas&quot;</span>,</p>
-                            <p className='pl-5 text-foreground'>Focus: <span className='text-accent'>&quot;Useful Service&quot;</span>,</p>
-                            <p className='pl-5 text-foreground'>Stack: <span className='text-accent'>&quot;Web + Software&quot;</span>,</p>
-                            <p className='pl-5 text-foreground'>Available: <span className='text-emerald-400'>True</span></p>
-                            <p className='text-muted-foreground'>{'}'}<span className='ml-2 animate-pulse text-accent'>▋</span></p>
-                        </div>
-                        <div className='flex items-center justify-between px-2 pb-1 pt-4 text-xs text-muted-foreground'>
-                            <span>Scroll to explore</span><FontAwesomeIcon icon={faArrowDown} width={13} height={13} className='animate-bounce text-accent' />
-                        </div>
-                    </div>
-                    <div className='relative z-10 grid grid-cols-2 gap-3'>
-                        <Button asChild className='h-12 rounded-md shadow-lg shadow-accent/20'>
-                            <a href='#Contact' className='flex items-center gap-2'>
-                                {mainText.button}<FontAwesomeIcon icon={faArrowRight} width={13} height={13} className='' />
-                            </a>
-                        </Button>
-                        <Button asChild variant='outline' className='h-12 rounded-md gap-3'>
-                            <Link href={socialLinks[1].link} target='_blank'>
-                                <FontAwesomeIcon icon={faGithub} width={16} height={16} className='' /> Github
-                            </Link>
-                        </Button>
-                    </div>
-                    <div className='relative z-10 grid grid-cols-2 divide-x divide-border rounded-lg border border-border/70 bg-card/60 p-4 text-center backdrop-blur'>
-                        <div><p className='text-2xl font-black'>3+</p><p className='text-xs text-muted-foreground'>Years learning</p></div>
-                        <div><p className='text-2xl font-black'>4+</p><p className='text-xs text-muted-foreground'>Projects shipped</p></div>
-                    </div>
-                </div>
+export default function Main() {
+  return (
+    <section className="relative isolate" id="Home" aria-labelledby="hero-title">
+      <AmbientBackground variant="hero" />
+      <div className="grid items-center gap-x-20 gap-y-16 pb-0 pt-20 md:grid-cols-[1.35fr_0.8fr] [&_h1]:text-[clamp(48px,5.4vw,78px)] [&_h1]:leading-[1.03] [&_h1]:tracking-[-0.065em] [&_h1]:font-medium [&_h1_>_span]:text-accent max-lg:gap-x-10 max-md:pt-12 max-md:gap-y-10 max-md:[&_h1]:text-[clamp(44px,10vw,68px)] w-[min(1184px,calc(100%-96px))] mx-auto max-md:w-[calc(100%-40px)]">
+        <div>
+          <p className="mb-9 flex items-center gap-2 text-[10px] uppercase tracking-[0.15em] text-muted-foreground">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent ring-4 ring-accent/[0.08]" /> Available for select projects
+          </p>
+          <p className="mb-5 text-sm [&_span]:text-muted-foreground max-lg:[&_span]:block max-lg:[&_span]:mt-[5px] max-md:[&_span]:inline">
+            Hey, I’m Arnold. <span>Full stack developer.</span>
+          </p>
+          <h1 id="hero-title">
+            Good ideas.
+            <br />
+            Thoughtful code.
+            <br />
+            <span>Useful things.</span>
+          </h1>
+          <p className="mb-8 mt-6 max-w-[440px] text-sm leading-7 text-muted-foreground">
+            I turn ideas into websites, applications, and tools that make life a
+            little easier. Built with care, from the first pixel to the last API.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Button asChild className="h-12 px-6">
+              <a href="#Projects">
+                Explore my work{" "}
+                <span aria-hidden="true" className="ml-5">
+                  <Icon
+                    icon={faArrowDown}
+                    width={14}
+                    height={14}
+                    aria-hidden="true"
+                  />
+                </span>
+              </a>
+            </Button>
+            <Button asChild variant="outline" className="h-12 px-6">
+              <a href="#Contact">
+                Let’s talk{" "}
+                <span aria-hidden="true" className="ml-5">
+                  <Icon
+                    icon={faArrowUpRightFromSquare}
+                    width={14}
+                    height={14}
+                    aria-hidden="true"
+                  />
+                </span>
+              </a>
+            </Button>
+          </div>
+        </div>
+        <div className="relative mx-auto w-full max-w-[360px] pt-5 max-md:max-w-[300px] max-md:pt-0">
+          <div className="relative aspect-[4/5] rounded-t-[160px] rounded-b-xl border border-border bg-[#2d3229] [&_>_img]:rounded-t-[160px] [&_>_img]:rounded-b-xl [&::after]:content-[''] [&::after]:absolute [&::after]:inset-0 [&::after]:rounded-[inherit] [&::after]:bg-[linear-gradient(transparent_60%,rgb(0_0_0/0.8))] [&::after]:pointer-events-none">
+            <Image
+              src="/icons/avatar.png"
+              alt="Pixel-art portrait of Arnold Nillas"
+              fill
+              preload
+              sizes="(max-width: 767px) 85vw, 420px"
+              className="object-cover"
+            />
+            <span className="absolute -right-5 top-5 z-10 text-[110px] leading-none text-accent" aria-hidden="true">
+              <Icon icon={faAsterisk} width={90} height={90} aria-hidden="true" />
+            </span>
+            <div className="absolute bottom-7 left-7 z-10 flex flex-col gap-1 text-sm [&_span:last-child]:text-[10px] [&_span:last-child]:uppercase [&_span:last-child]:tracking-widest [&_span:last-child]:text-white/60">
+              <span>Arnold Nillas</span>
+              <span>Developer & problem solver</span>
             </div>
-        </section>
-    )
+          </div>
+          <div className="mt-5 flex items-center gap-3 text-[11px] text-muted-foreground [&_>_span]:text-xl [&_>_span]:text-accent">
+            <span aria-hidden="true">
+              <Icon
+                icon={faTurnUp}
+                width={14}
+                height={14}
+                aria-hidden="true"
+                className="rotate-90"
+              />
+            </span>{" "}
+            A curious mind. A hands-on approach.
+          </div>
+        </div>
+        <div className="col-span-full flex items-center justify-between gap-5 border-b border-t py-6 text-[10px] uppercase tracking-[0.12em] text-muted-foreground [&_i]:mx-3 [&_i]:not-italic [&_i]:text-border [&_a]:flex [&_a]:shrink-0 [&_a]:gap-5 [&_a]:text-foreground [&_a:hover]:text-accent max-lg:[&_>_span]:max-w-[55%] max-lg:[&_>_span]:leading-[1.8] max-md:text-[9px] max-md:[&_>_span]:max-w-[55%] max-md:[&_i]:mx-[5px]">
+          <span>
+            Web development <i>/</i> Software <i>/</i> Creative problem solving
+          </span>
+          <a href="#Projects">
+            {String(projectTexts.projects.length).padStart(2, "0")} selected
+            projects{" "}
+            <span aria-hidden="true">
+              <Icon
+                icon={faArrowDown}
+                width={14}
+                height={14}
+                aria-hidden="true"
+              />
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+  );
 }
-
-export default Main

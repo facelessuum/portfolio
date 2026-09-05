@@ -1,243 +1,117 @@
-"use client";
+'use client'
 
-import React, { useEffect, useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
-import { contactTexts, email, socialLinks } from "@/lib/texts";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
-import { Button } from "./ui/button";
-import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowUpRightFromSquare,
-  faClockFour,
-  faEnvelope,
-  faSpinner,
-} from "@fortawesome/free-solid-svg-icons";
-import { toast } from "sonner";
-import emailjs from "@emailjs/browser";
+import { Icon } from '@/components/ui/icon'
+import { faPaperPlane, faSpinner } from '@fortawesome/free-solid-svg-icons'
 
-const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [loading, setLoading] = useState(false);
-  const [cooldownTick, setCooldownTick] = useState(0);
+import { useEffect, useRef, useState, type FormEvent } from 'react'
+import CopyEmail from './CopyEmail'
+import AmbientBackground from './AmbientBackground'
+import { Input } from './ui/input'
+import { Textarea } from './ui/textarea'
+import { Button } from './ui/button'
+import emailjs from '@emailjs/browser'
+import { getCooldownMinutes } from '@/lib/time'
+
+function readSentAt() {
+  try {
+    const value = localStorage.getItem('timer')
+    const timestamp = value ? new Date(value).getTime() : 0
+    return Number.isFinite(timestamp) ? timestamp : 0
+  } catch {
+    return 0
+  }
+}
+
+export default function Contact() {
+  const [loading, setLoading] = useState(false)
+  const [minutesLeft, setMinutesLeft] = useState(0)
+  const [status, setStatus] = useState<{ kind: 'success' | 'error'; message: string } | null>(null)
+  const sentAt = useRef(0)
+  const sending = useRef(false)
 
   useEffect(() => {
-    const interval = window.setInterval(
-      () => setCooldownTick((previous) => previous + 1),
-      6000,
-    );
-    return () => window.clearInterval(interval);
-  }, []);
-
-  const cooldownMinutes = () => {
-    const sentAt = localStorage.getItem("timer");
-    if (!sentAt) return null;
-    const remaining =
-      60 * 60 * 1000 - (Date.now() - new Date(sentAt).getTime());
-    return remaining > 0 ? Math.ceil(remaining / (60 * 1000)) : null;
-  };
-
-  const sendButton = () => {
-    void cooldownTick;
-    const minutesLeft =
-      typeof window !== "undefined" ? cooldownMinutes() : null;
-    return (
-      <Button
-        type="submit"
-        className="h-11 w-full rounded-md sm:w-36"
-        disabled={loading || minutesLeft !== null}
-      >
-        {loading ? (
-          <FontAwesomeIcon
-            icon={faSpinner}
-            width={16}
-            height={16}
-            className="animate-spin"
-          />
-        ) : minutesLeft !== null ? (
-          <>
-            <FontAwesomeIcon icon={faClockFour} width={15} className="" />{" "}
-            {minutesLeft} min
-          </>
-        ) : (
-          <>
-            Send message{" "}
-            <FontAwesomeIcon
-              icon={faArrowUpRightFromSquare}
-              width={13}
-              height={13}
-              className=""
-            />
-          </>
-        )}
-      </Button>
-    );
-  };
-
-  const sendEmail = async (event: React.FormEvent) => {
-    event.preventDefault();
-    try {
-      setLoading(true);
-      const response = await emailjs.send(
-        process.env.NEXT_PUBLIC_SERVICE_ID!,
-        process.env.NEXT_PUBLIC_TEMPLATE_ID!,
-        formData,
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
-      );
-      if (response.text === "OK") {
-        toast.success(
-          "Thank you for reaching out! I'll get back to you as soon as possible.",
-          { position: "bottom-center" },
-        );
-        setFormData({ name: "", email: "", message: "" });
-        localStorage.setItem("timer", new Date().toISOString());
-      }
-    } catch (error) {
-      toast.error("Something went wrong. Please try again.", {
-        position: "bottom-center",
-      });
-      console.error("Error:", error);
-    } finally {
-      setLoading(false);
+    sentAt.current = readSentAt()
+    const update = () => {
+      sentAt.current = Math.max(sentAt.current, readSentAt())
+      setMinutesLeft(getCooldownMinutes(sentAt.current))
     }
-  };
+    update()
+    const interval = window.setInterval(update, 15000)
+    window.addEventListener('storage', update)
+    window.addEventListener('focus', update)
+    document.addEventListener('visibilitychange', update)
+    return () => {
+      window.clearInterval(interval)
+      window.removeEventListener('storage', update)
+      window.removeEventListener('focus', update)
+      document.removeEventListener('visibilitychange', update)
+    }
+  }, [])
 
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = event.target;
-    setFormData((previous) => ({ ...previous, [name]: value }));
-  };
+  async function sendEmail(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    if (sending.current) return
+    const lastSent = Math.max(sentAt.current, readSentAt())
+    const remainingMinutes = getCooldownMinutes(lastSent)
+    if (remainingMinutes > 0) {
+      setMinutesLeft(remainingMinutes)
+      return
+    }
+    const form = event.currentTarget
+    const data = new FormData(form)
+    const payload = { name: String(data.get('name') ?? '').trim(), email: String(data.get('email') ?? '').trim(), message: String(data.get('message') ?? '').trim() }
+    if (!payload.name || !payload.email || !payload.message) {
+      setStatus({ kind: 'error', message: 'Please fill in each field before sending.' })
+      return
+    }
+    const service = process.env.NEXT_PUBLIC_SERVICE_ID
+    const template = process.env.NEXT_PUBLIC_TEMPLATE_ID
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+    if (!service || !template || !publicKey) {
+      setStatus({ kind: 'error', message: 'The contact form is unavailable. Please copy the email address to get in touch directly.' })
+      return
+    }
+    sending.current = true
+    setLoading(true)
+    setStatus(null)
+    try {
+      await emailjs.send(service, template, payload, publicKey)
+      sentAt.current = Date.now()
+      setMinutesLeft(getCooldownMinutes(sentAt.current))
+      try { localStorage.setItem('timer', new Date(sentAt.current).toISOString()) } catch { /* The in-memory cooldown still applies when storage is unavailable. */ }
+      form.reset()
+      setStatus({ kind: 'success', message: 'Message sent. Thanks for reaching out — I’ll get back to you soon!' })
+    } catch {
+      setStatus({ kind: 'error', message: 'Your message could not be sent. Please try again or copy the email address to contact me directly.' })
+    } finally {
+      sending.current = false
+      setLoading(false)
+    }
+  }
 
   return (
-    <section
-      className="padding relative overflow-hidden bg-[#050a13] py-24 text-white lg:py-36"
-      id="Contact"
-    >
-      <div className="pointer-events-none absolute right-[-12rem] top-1/4 h-96 w-96 rounded-full bg-cyan-400/10 blur-3xl" />
-      <div className="mx-auto grid w-full max-w-7xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-        <div className="flex flex-col justify-between gap-10">
-          <div className="space-y-5">
-            <span className="section-kicker">Have a project in mind?</span>
-            <h1 className="max-w-md text-5xl font-black leading-[0.95] tracking-[-0.08em] sm:text-6xl">
-              {contactTexts.div.h1}
-            </h1>
-            <p className="max-w-md text-base leading-7 text-white/55">
-              {contactTexts.div.p}
-            </p>
-          </div>
-          <div className="space-y-5">
-            <button
-              type="button"
-              onClick={() => {
-                navigator.clipboard.writeText(email);
-                toast.success("Email copied", { position: "bottom-center" });
-              }}
-              className="group flex w-full max-w-md items-center gap-4 border-b border-white/15 pb-4 text-left text-sm text-white/75 transition hover:border-cyan-300"
-            >
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-cyan-300 text-[#050a13]">
-                <FontAwesomeIcon icon={faEnvelope} className="" />
-              </span>
-              <span className="flex-1">{email}</span>
-              <FontAwesomeIcon
-                icon={faArrowUpRightFromSquare}
-                className="text-white/40 transition group-hover:-translate-y-1 group-hover:text-cyan-300"
-              />
-            </button>
-            <div className="flex items-center gap-2">
-              {socialLinks.map((link) => (
-                <Link href={link.link} target="_blank" key={link.link}>
-                  <Button
-                    aria-label="Social link"
-                    variant="ghost"
-                    className="h-10 w-10 rounded-full p-0 text-white/60 hover:text-cyan-300"
-                  >
-                    <FontAwesomeIcon icon={link.icon} className="" />
-                  </Button>
-                </Link>
-              ))}
-            </div>
-          </div>
+    <section id="Contact" className="relative isolate py-[104px] max-md:py-16">
+      <AmbientBackground variant="contact" />
+      <div className="mx-auto grid w-[min(1184px,calc(100%-96px))] gap-12 max-md:w-[calc(100%-40px)] lg:grid-cols-2 lg:gap-24">
+        <div>
+          <p className="flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-accent [&_>_span]:text-muted-foreground"><span>05 /</span> Start a conversation</p>
+          <h2 className="mt-6 text-5xl leading-[1.06] tracking-[-0.06em] sm:text-6xl [&_span]:text-accent">Have something<br />in mind?<br /><span>Let’s build it.</span></h2>
+          <p className="mb-8 mt-6 max-w-sm text-sm leading-7 text-muted-foreground">A new project, a tricky problem, or just a hello. I’d love to hear what you’re thinking.</p>
+          <CopyEmail />
         </div>
-        <Card className="rounded-xl border-white/10 bg-white/[0.04] text-white shadow-2xl shadow-black/20 backdrop-blur">
-          <CardHeader className="border-b border-white/10 p-6 sm:p-8">
-            <CardTitle className="text-2xl font-black tracking-[-0.05em]">
-              {contactTexts.form.h1}
-            </CardTitle>
-            <CardDescription className="text-white/50">
-              {contactTexts.form.p}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="p-6 sm:p-8">
-            <form onSubmit={sendEmail} className="flex flex-col gap-5">
-              <div className="grid gap-5 md:grid-cols-2">
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="name" className="text-white/70">
-                    Name
-                  </Label>
-                  <Input
-                    id="name"
-                    aria-label="Name"
-                    type="text"
-                    name="name"
-                    required
-                    placeholder="Your name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="border-white/10 bg-white/[0.04] text-white placeholder:text-white/30"
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="email" className="text-white/70">
-                    Email
-                  </Label>
-                  <Input
-                    id="email"
-                    aria-label="Email address"
-                    type="email"
-                    name="email"
-                    required
-                    placeholder="you@example.com"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="border-white/10 bg-white/[0.04] text-white placeholder:text-white/30"
-                  />
-                </div>
-              </div>
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="message" className="text-white/70">
-                  Message
-                </Label>
-                <Textarea
-                  id="message"
-                  aria-label="Message"
-                  name="message"
-                  required
-                  placeholder="Tell me a little about your idea..."
-                  value={formData.message}
-                  onChange={handleChange}
-                  className="border-white/10 bg-white/[0.04] text-white placeholder:text-white/30"
-                />
-              </div>
-              <div className="flex justify-end pt-2">{sendButton()}</div>
-            </form>
-          </CardContent>
-        </Card>
+        <form onSubmit={sendEmail} className="flex flex-col gap-5 rounded-xl border border-border bg-card p-6 sm:p-8 [&_label]:mb-2 [&_label]:block [&_label]:text-xs [&_label]:text-muted-foreground [&_input]:rounded-md [&_input]:bg-background [&_input]:text-sm [&_textarea]:rounded-md [&_textarea]:bg-background [&_textarea]:text-sm [&_input]:h-11 [&_textarea]:min-h-36 [&_textarea]:resize-y" aria-label="Contact Arnold" aria-busy={loading}>
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div><label htmlFor="name">Your name</label><Input id="name" name="name" autoComplete="name" required maxLength={100} placeholder="Alex Morgan" disabled={loading} /></div>
+            <div><label htmlFor="email">Email address</label><Input id="email" name="email" type="email" autoComplete="email" required maxLength={254} placeholder="alex@example.com" disabled={loading} /></div>
+          </div>
+          <div><label htmlFor="message">What are you working on?</label><Textarea id="message" name="message" required maxLength={5000} placeholder="Tell me a little about your project..." disabled={loading} /></div>
+          <div aria-live="polite" aria-atomic="true">
+            {status && <p className={`text-sm leading-6 ${status.kind === 'error' ? 'text-red-300' : 'text-accent'}`}>{status.message}</p>}
+            {minutesLeft > 0 && <p className="mt-2 text-xs leading-5 text-muted-foreground">You can send another message in {minutesLeft} {minutesLeft === 1 ? 'minute' : 'minutes'}. For a follow-up, copy the email address to contact me directly.</p>}
+          </div>
+          <Button type="submit" disabled={loading || minutesLeft > 0} className="h-12 w-full">{loading ? 'Sending…' : 'Send message'}<Icon icon={loading ? faSpinner : faPaperPlane} width={14} height={14} aria-hidden="true" className={`ml-auto ${loading ? "animate-spin" : ""}`} /></Button>
+        </form>
       </div>
     </section>
-  );
-};
-
-export default Contact;
+  )
+}
