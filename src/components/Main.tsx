@@ -2,10 +2,8 @@ import { Icon } from "@/components/ui/icon";
 import {
   faArrowUpRightFromSquare,
   faArrowDown,
-  faTurnUp,
-  faAsterisk,
 } from "@fortawesome/free-solid-svg-icons";
-import Image from "next/image";
+import HeroSculpture from "./HeroSculpture";
 import AmbientBackground from "./AmbientBackground";
 import { Button } from "./ui/button";
 import { projectTexts } from "@/lib/texts";
@@ -62,37 +60,7 @@ export default function Main() {
             </Button>
           </div>
         </div>
-        <div className="relative mx-auto w-full max-w-[360px] pt-5 max-md:max-w-[300px] max-md:pt-0">
-          <div className="relative aspect-[4/5] rounded-t-[160px] rounded-b-xl border border-border bg-[#2d3229] [&_>_img]:rounded-t-[160px] [&_>_img]:rounded-b-xl [&::after]:content-[''] [&::after]:absolute [&::after]:inset-0 [&::after]:rounded-[inherit] [&::after]:bg-[linear-gradient(transparent_60%,rgb(0_0_0/0.8))] [&::after]:pointer-events-none">
-            <Image
-              src="/icons/avatar.png"
-              alt="Pixel-art portrait of Arnold Nillas"
-              fill
-              preload
-              sizes="(max-width: 767px) 85vw, 420px"
-              className="object-cover"
-            />
-            <span className="absolute -right-5 top-5 z-10 text-[110px] leading-none text-accent" aria-hidden="true">
-              <Icon icon={faAsterisk} width={90} height={90} aria-hidden="true" />
-            </span>
-            <div className="absolute bottom-7 left-7 z-10 flex flex-col gap-1 text-sm [&_span:last-child]:text-[10px] [&_span:last-child]:uppercase [&_span:last-child]:tracking-widest [&_span:last-child]:text-white/60">
-              <span>Arnold Nillas</span>
-              <span>Developer & problem solver</span>
-            </div>
-          </div>
-          <div className="mt-5 flex items-center gap-3 text-[11px] text-muted-foreground [&_>_span]:text-xl [&_>_span]:text-accent">
-            <span aria-hidden="true">
-              <Icon
-                icon={faTurnUp}
-                width={14}
-                height={14}
-                aria-hidden="true"
-                className="rotate-90"
-              />
-            </span>{" "}
-            A curious mind. A hands-on approach.
-          </div>
-        </div>
+        <HeroSculpture />
         <div className="col-span-full flex items-center justify-between gap-5 border-b border-t py-6 text-[10px] uppercase tracking-[0.12em] text-muted-foreground [&_i]:mx-3 [&_i]:not-italic [&_i]:text-border [&_a]:flex [&_a]:shrink-0 [&_a]:gap-5 [&_a]:text-foreground [&_a:hover]:text-accent max-lg:[&_>_span]:max-w-[55%] max-lg:[&_>_span]:leading-[1.8] max-md:text-[9px] max-md:[&_>_span]:max-w-[55%] max-md:[&_i]:mx-[5px]">
           <span>
             Web development <i>/</i> Software <i>/</i> Creative problem solving

@@ -1,3 +1,4 @@
+import SectionMotion from '@/components/SectionMotion'
 import Contact from '@/components/Contact'
 import Expertise from '@/components/Expertise'
 import Footer from '@/components/Footer'
@@ -12,6 +13,7 @@ export default function HomePage() {
     <>
       <a href="#main-content" className="fixed left-4 top-4 z-50 -translate-y-24 rounded bg-accent px-5 py-3 text-accent-foreground focus:translate-y-0">Skip to content</a>
       <Header />
+      <SectionMotion />
       <main id="main-content">
         <Main />
         <Projects />

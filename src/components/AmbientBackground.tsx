@@ -1,3 +1,5 @@
+import FlowLines from './FlowLines'
+
 const treatments = {
   hero: {
     glow: 'bg-[radial-gradient(ellipse_at_80%_35%,rgba(206,242,115,0.06),transparent_55%),radial-gradient(ellipse_at_10%_15%,rgba(115,155,150,0.035),transparent_45%)]',
@@ -18,6 +20,7 @@ export default function AmbientBackground({ variant }: { variant: keyof typeof t
 
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-[inherit]">
+      <FlowLines />
       <div className={`absolute inset-0 opacity-50 ${glow}`} />
       {pattern && <div className={`absolute inset-0 ${pattern}`} />}
     </div>

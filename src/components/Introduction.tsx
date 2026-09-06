@@ -1,7 +1,8 @@
+import Image from "next/image"
 import { Icon } from '@/components/ui/icon'
 import { faArrowDown, faArrowUpRightFromSquare, faCode, faLightbulb, faPuzzlePiece } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import { projectTexts, socialLinks } from '@/lib/texts'
+import { socialLinks } from '@/lib/texts'
 import { Button } from './ui/button'
 import SectionHeading from './SectionHeading'
 import AmbientBackground from './AmbientBackground'
@@ -21,16 +22,14 @@ export default function Introduction() {
       <div className="w-[min(1184px,calc(100%-96px))] mx-auto max-md:w-[calc(100%-40px)]">
         <SectionHeading number="02" label="Behind the code" title="Curiosity is where it starts." />
         <div className="grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
-          <div className="relative mx-auto w-full max-w-md overflow-hidden rounded-xl border border-border bg-background p-6 sm:p-8 [&_h3]:mt-8 [&_h3]:text-2xl [&_h3]:font-medium [&_h3]:tracking-[-0.04em]">
-            <div className="relative z-10 flex items-center justify-between gap-5 [&_>_span:last-child]:max-w-36 [&_>_span:last-child]:text-right [&_>_span:last-child]:leading-5"><span className="shrink-0 text-3xl font-bold tracking-[-0.06em] [&_span]:text-accent">A<span>/</span>N</span><span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">The person behind the pixels</span></div>
-            <h3>Arnold Nillas<span className="text-accent">.</span></h3>
-            <p className="mt-2 text-[11px] leading-5 text-muted-foreground">Full stack developer · Curious by default</p>
-            <dl className="mt-7 border-t py-2 [&_>_div]:flex [&_>_div]:flex-wrap [&_>_div]:items-center [&_>_div]:justify-between [&_>_div]:gap-x-4 [&_>_div]:gap-y-1 [&_>_div]:py-2 [&_>_div]:text-xs [&_dt]:text-muted-foreground [&_dd_a]:inline-flex [&_dd_a]:items-center [&_dd_a]:gap-2 [&_dd_a:hover]:text-accent">
-              <div><dt>My path</dt><dd>Self-taught & still learning</dd></div>
-              <div><dt>My focus</dt><dd>Web apps & useful tools</dd></div>
-              <div><dt>My work</dt><dd><a href="#Projects">{String(projectTexts.projects.length).padStart(2, '0')} selected projects <Icon icon={faArrowUpRightFromSquare} width={10} height={10} aria-hidden="true" /></a></dd></div>
-            </dl>
-            <a href={github.link} target="_blank" rel="noopener noreferrer" className="mt-3 flex items-center gap-3 rounded-md border border-border bg-card px-4 py-3 text-xs transition-colors hover:border-accent/40 hover:text-accent"><Icon icon={faGithub} width={17} height={17} aria-hidden="true" /> Find me on GitHub <Icon icon={faArrowUpRightFromSquare} width={12} height={12} aria-hidden="true" className="ml-auto" /></a>
+          <div className="relative mx-auto w-full max-w-[360px] overflow-hidden rounded-xl border border-border bg-background p-5 sm:p-6 [&_h3]:mt-0 [&_h3]:text-2xl [&_h3]:font-medium [&_h3]:tracking-[-0.04em]">
+            <div className="about-identity flex flex-col items-center gap-5 text-center">
+              <div className="about-avatar relative h-52 w-52 shrink-0 overflow-hidden rounded-2xl border border-accent/20 bg-[#2d3229]">
+                <Image src="/icons/avatar.png" alt="Pixel-art portrait of Arnold Nillas" fill sizes="208px" className="object-cover" />
+              </div>
+              <div><p className="mb-2 font-mono text-[9px] uppercase tracking-widest text-accent">Behind the pixels</p><h3>Arnold Nillas<span className="text-accent">.</span></h3><p className="mt-1 text-[11px] leading-5 text-muted-foreground">Full stack developer<br />Curious by default</p></div>
+            </div>
+            <a href={github.link} target="_blank" rel="noopener noreferrer" className="mt-5 flex items-center gap-3 rounded-md border border-border bg-card px-4 py-3 text-xs transition-colors hover:border-accent/40 hover:text-accent"><Icon icon={faGithub} width={17} height={17} aria-hidden="true" /> Find me on GitHub <Icon icon={faArrowUpRightFromSquare} width={12} height={12} aria-hidden="true" className="ml-auto" /></a>
           </div>
           <div >
             <p className="flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-accent [&_>_span]:text-muted-foreground">A little more human, a little less résumé</p>
